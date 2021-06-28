@@ -1,5 +1,3 @@
-const { response } = require("express");
-
 let db;
 const request = indexedDB.open("budget", 1);
   
@@ -29,6 +27,12 @@ const request = indexedDB.open("budget", 1);
   }
 
   function checkDatabase() {
+
+    const transaction = db.transaction(["pending"], "readwrite");
+    const store = transaction.objectStore("pending");
+    const getAll = store.getAll();
+
+    getAll.onsuccess = function() {
       if (getAll.result.length > 0) {
           fetch("api/transaction/bulk", {
               method: "POST",
@@ -38,13 +42,14 @@ const request = indexedDB.open("budget", 1);
                   "Content-Type": "application/json"
               }
           })
-          .then(responst => response.json())
+          .then(response => response.json())
             .then(() => {
                 const transaction = db.transaction(["pending"], "readwrite");
                 const store = transaction.objectStore("pending");
                 store.clear();
             });
       }
+    };
   }
 
   window.addEventListener("online", checkDatabase);
