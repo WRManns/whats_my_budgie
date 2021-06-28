@@ -1,8 +1,8 @@
 {
-    "short_name": "Budgie",
-    "name": "What's My Budgie",
+    "short_name": "Budgie?",
+    "name": "What's My Budgie?",
     "start_url": "/",
-    "background_color": "#808080",
+    "background_color": "#ffffff",
     "display": "standalone",
-    "color": "#696969"
+    "theme_color": "#ffffff"
 }
